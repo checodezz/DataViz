@@ -1,4 +1,5 @@
 import User from "../model/user.js";
+import bcrypt from "bcryptjs"
 
 export const userSigUp = async (req, res) => {
     try {
