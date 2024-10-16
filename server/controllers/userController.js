@@ -72,6 +72,12 @@ import User from "../model/user.model.js";
     }
 
 
+    export const userLogout = (req, res) => {
+        res.cookie("token", undefined, { expires: new Date(0), httpOnly: true });
+        return res.status(200).json({ message: "Logged out successfully" });
+    };
+
+
 export const userDashboard = async (req, res) => {
 console.log(req.user)
     res.status(200).json("welcome to dashboard")
