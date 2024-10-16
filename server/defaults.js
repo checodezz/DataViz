@@ -4,7 +4,7 @@ const defaultData = async () => {
     try {
         // await Product.deleteMany({})
         // await AnalyticsData.insertMany(data);
-        console.log(`Data imported Successfully`)
+        // console.log(`Data imported Successfully`)
     } catch (error) {
         console.log("Error while inserting default data")
     }
