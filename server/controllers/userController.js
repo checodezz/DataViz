@@ -60,9 +60,12 @@ import User from "../model/user.model.js";
         //cookie section
         const options = {
             expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            httpOnly : true
+            httpOnly : true,
+            secure : true,
+            sameSite : "None"
         }
 
+        console.log(existingUser)
         res.status(200).cookie("token", token, options).json({success : true,existingUser})
     }
         } catch (error) {
