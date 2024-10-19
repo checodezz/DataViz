@@ -12,8 +12,9 @@ const allowedOrigins = ["http://localhost:5173", "https://your-production-domain
 
 const app = express();
 
-app.use(cors({
+const corsOptions = {
     origin: function (origin, callback) {
+        console.log("Origin:", origin); // Log the origin for debugging
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         } else {
@@ -21,8 +22,10 @@ app.use(cors({
         }
     },
     credentials: true,
-}));
+};
 
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions)); // Include this line
 
 app.use(express.json());
 app.use(cookieParser())
