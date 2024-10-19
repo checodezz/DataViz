@@ -2,7 +2,7 @@ import AnalyticsData from "./model/analyticsData.model.js";
 import { data } from "./constants/data.js";
 const defaultData = async () => {
     try {
-        // await Product.deleteMany({})
+        // await AnalyticsData.deleteMany({})
         // await AnalyticsData.insertMany(data);
         // console.log(`Data imported Successfully`)
     } catch (error) {
