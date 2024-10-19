@@ -30,13 +30,12 @@ const fetchSheetData = async () => {
   */
 
 
-const clientEmail = "chethankumar@after-all-319412.iam.gserviceaccount.com"
-const privateKey = process.env.PRIVATE_KEY
-
-  const auth = new google.auth.GoogleAuth({
+const clientEmail = "chethankumar@after-all-319412.iam.gserviceaccount.com" 
+const privateKey = process.env.private_key.replace(/\\n/g, '\n')
+export const auth = new google.auth.GoogleAuth({
     credentials: {
       client_email: clientEmail,
-      private_key: privateKey,
+      private_key: privateKey, 
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
   });
@@ -94,6 +93,4 @@ const storeDataInDB = async (documents) => {
   }
 };
 
-
-
-
+fetchSheetData()
