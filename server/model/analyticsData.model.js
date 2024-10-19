@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 const AnalyticsDataSchema = new mongoose.Schema({
-    day: String,     
-    age: String,     
-    gender: String, 
-    a: Number,     
-    b: Number,
-    c: Number,       
-    d: Number,       
-    e: Number,       
-    f: Number    
-  });
+  day: String,
+  age: String,
+  gender: String,
+  a: Number,
+  b: Number,
+  c: Number,
+  d: Number,
+  e: Number,
+  f: Number,   
+  }, {timestamps : true});
 
   const AnalyticsData = mongoose.model('AnalyticsData', AnalyticsDataSchema);
 
