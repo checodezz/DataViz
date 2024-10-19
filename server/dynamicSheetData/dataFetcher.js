@@ -1,5 +1,5 @@
 import { google } from "googleapis"
-import AnalyticsData from "./model/analyticsData.model.js";
+import AnalyticsData from "../model/analyticsData.model.js";
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -66,16 +66,25 @@ export const auth = new google.auth.GoogleAuth({
       
       const documents = rows.map((row) => {
         let doc = {};
+        // Ensure you map the fields to match your schema
         headers.forEach((header, index) => {
-          doc[header.trim()] = row[index] || null;  
+          const key = header.trim();
+          if (key === "Day") doc.day = row[index] || null; 
+          else if (key == "Age") doc.age = row[index] || null;
+          else if (key == "Gender") doc.gender = row[index] || null;
+          else if (key == "A") doc.a = Number(row[index]) || 0; 
+          else if (key == "B") doc.b = Number(row[index]) || 0;
+          else if (key == "C") doc.c = Number(row[index]) || 0;
+          else if (key == "D") doc.d = Number(row[index]) || 0;
+          else if (key == "E") doc.e = Number(row[index]) || 0;
+          else if (key == "F") doc.f = Number(row[index]) || 0;
         });
         return doc;
       });
       await storeDataInDB(documents);
-    } else {
+    }  else {
       console.log('No valid data found in the Google Sheet');
     }
-
   } catch (error) {
     console.error('Error fetching sheet data:', error);
   }
