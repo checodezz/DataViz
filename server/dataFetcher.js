@@ -30,7 +30,7 @@ const fetchSheetData = async () => {
   */
 
 
-const clientEmail = process.env.CLIENT_EMAIL
+const clientEmail = "chethankumar@after-all-319412.iam.gserviceaccount.com"
 const privateKey = process.env.PRIVATE_KEY
 
   const auth = new google.auth.GoogleAuth({
