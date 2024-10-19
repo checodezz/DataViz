@@ -30,9 +30,11 @@ app.use(express.json());
 app.use(cookieParser())
 
 connectDb()
+fetchSheetData()
+
 
 app.get('/', (req, res) => {
-    res.send('Hello, ES6+ Node.js with Express!');
+    res.send('Hello, welcome to dataWiz dashboard !');
 });
 
 app.use("/", Router)

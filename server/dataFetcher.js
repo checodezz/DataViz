@@ -71,8 +71,6 @@ export const auth = new google.auth.GoogleAuth({
         });
         return doc;
       });
-
-      // Insert data into MongoDB
       await storeDataInDB(documents);
     } else {
       console.log('No valid data found in the Google Sheet');
@@ -93,4 +91,3 @@ const storeDataInDB = async (documents) => {
   }
 };
 
-fetchSheetData()
