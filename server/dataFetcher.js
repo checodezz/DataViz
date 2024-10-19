@@ -1,5 +1,7 @@
 import { google } from "googleapis"
 import AnalyticsData from "./model/analyticsData.model.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 /*
  import csv from "csv-parser"
@@ -28,7 +30,7 @@ const fetchSheetData = async () => {
   */
 
 
-  const clientEmail = process.env.CLIENT_EMAIL;
+const clientEmail = process.env.CLIENT_EMAIL
 const privateKey = process.env.PRIVATE_KEY
 
   const auth = new google.auth.GoogleAuth({
