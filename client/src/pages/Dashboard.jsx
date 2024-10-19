@@ -1,25 +1,72 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDashboardDataAsync } from "../redux/dashboardSlice"; // Adjust the path accordingly
+import { useEffect } from "react";
+import { fetchDashboardDataAsync } from "../redux/dashboardSlice";
+import BarChart from "../components/BarChart";
+import UserComp from "../components/UserComp";
+import Filters from "../components/Filters";
+import { useDashboardFilters } from "../hooks/useDashboardFilters";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.dashboard); // Use your slice state
-
-  console.log(data);
+  const { data, loading, error } = useSelector((state) => state.dashboard);
+  const {
+    startDate,
+    endDate,
+    selectedAge,
+    selectedGender,
+    setStartDate,
+    setEndDate,
+    setSelectedAge,
+    setSelectedGender,
+    resetFilters,
+  } = useDashboardFilters();
 
   useEffect(() => {
     dispatch(fetchDashboardDataAsync());
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const filteredData = data?.filter((item) => {
+    const itemDate = new Date(item.day.split("/").reverse().join("-"));
+    return (
+      itemDate >= startDate &&
+      itemDate <= endDate &&
+      item.age === selectedAge &&
+      item.gender === selectedGender
+    );
+  });
+
+  if (loading) return <div className="text-center">Loading...</div>;
+  if (error)
+    return <div className="text-danger text-center">Error: {error}</div>;
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      {/* Render your dashboard data here */}
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+    <div className="container mt-5">
+      <UserComp />
+      <hr />
+      <div className="row g-5 mt-1">
+        <div className="col-md-3 border-end pe-3">
+          <Filters
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            selectedAge={selectedAge}
+            setSelectedAge={setSelectedAge}
+            selectedGender={selectedGender}
+            setSelectedGender={setSelectedGender}
+            resetFilters={resetFilters}
+          />
+        </div>
+        <div className="col-md-9 ms-auto mb-5 pb-5">
+          <section className="mb-2 pb-3">
+            <h3 className="">Feature Usage Over Time</h3>
+            <p className="text-muted">
+              * click on any feature to show its Timeline
+            </p>
+          </section>
+          {filteredData && <BarChart data={filteredData} />}
+        </div>
+      </div>
     </div>
   );
 };

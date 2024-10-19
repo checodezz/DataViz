@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import InputField from "../utils/InputField";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAsync } from "../redux/authSlice";
 
@@ -8,10 +8,15 @@ const Login = () => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const location = useLocation(); // To get the current location and query params
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  // Extract the redirect URL from query parameters
+  const redirectUrl = new URLSearchParams(location.search).get("redirect");
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,9 +30,9 @@ const Login = () => {
   // useEffect to navigate when isAuthenticated changes to true
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate(redirectUrl || "/dashboard"); // Redirect to the intended page or default to dashboard
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, redirectUrl]);
 
   return (
     <div

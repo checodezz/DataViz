@@ -8,7 +8,8 @@ export const fetchDashboardDataAsync = createAsyncThunk(
             const response = await axios.get("https://data-visualization-dashboard-seven.vercel.app/dashboard", {
                 withCredentials: true,
             });
-            return response.data;
+            console.log(response.data)
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }

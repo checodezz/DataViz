@@ -35,7 +35,7 @@ const authSlice = createSlice({
                 state.loading = true;
             })
             .addCase(loginUserAsync.fulfilled, (state, action) => {
-                console.log(action.payload.existingUser)
+                console.log(action.payload)
                 state.loading = false;
                 state.isAuthenticated = true;
                 state.user = action.payload;
