@@ -5,6 +5,8 @@ import Router from "./routes/route.js"
 import connectDb from "./db/db.js"
 import cookieParser from "cookie-parser";
 import defaultData from "./defaults.js"
+import { fetchSheetData } from "./dataFetcher.js"
+
 
 dotenv.config();
 
