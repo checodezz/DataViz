@@ -34,45 +34,50 @@ import User from "../model/user.model.js";
 
     export const userLogin = async (req, res) => {
         try {
-            //get all users from db
-            const {email, password} = req.body
-
-            if(!(email && password)){
-                res.status(400).json({error : "All fields are required"})
+            const { email, password } = req.body;
+    
+            if (!(email && password)) {
+                return res.status(400).json({ error: "All fields are required" });
             }
-        //find user from db
-        const existingUser = await User.findOne({email})
-
-    if(!existingUser){
-    res.status(404).json({error : "User does not exist, Please sign up and try again"})
-    }
-    //match the password
-
-    if(existingUser && (await bcrypt.compare(password, existingUser.password))){
-        const token = jwt.sign(
-            {id : existingUser._id}, 
-            process.env.JWT_SECRET,
-            {expiresIn : "2h"} 
-        )
-        existingUser.token = token
-        existingUser.password = undefined
-
-        //cookie section
-        const options = {
-            expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            httpOnly : true,
-            secure : true,
-            sameSite : "None"
-        }
-
-        console.log(existingUser)
-        res.status(200).cookie("token", token, options).json({success : true,existingUser})
-    }
+    
+            // Find user from the database
+            const existingUser = await User.findOne({ email });
+    
+            if (!existingUser) {
+                return res.status(404).json({ error: "User does not exist, Please sign up and try again" });
+            }
+    
+            // Match the password
+            const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ error: "Invalid password" }); // Return error for invalid password
+            }
+    
+            // If the password is valid, generate the token
+            const token = jwt.sign(
+                { id: existingUser._id },
+                process.env.JWT_SECRET,
+                { expiresIn: "2h" }
+            );
+            existingUser.token = token;
+            existingUser.password = undefined;
+    
+            // Cookie section
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+                secure: true,
+                sameSite: "None"
+            };
+    
+            console.log(existingUser);
+            return res.status(200).cookie("token", token, options).json({ success: true, existingUser });
         } catch (error) {
             console.log(error);
-            res.status(500).json(error)
+            return res.status(500).json({ error: "Internal server error" });
         }
-    }
+    };
+    
 
 
     export const userLogout = (req, res) => {
