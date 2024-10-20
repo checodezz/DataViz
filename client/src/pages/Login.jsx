@@ -16,6 +16,8 @@ const Login = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+
   const redirectUrl = new URLSearchParams(location.search).get("redirect");
 
   const handleInputChange = (e) => {
@@ -38,6 +40,11 @@ const Login = () => {
       toast.error(error.error);
     }
   }, [isAuthenticated, error, navigate, redirectUrl]);
+
+  // Toggle show/hide password
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <div
@@ -71,16 +78,28 @@ const Login = () => {
               />
             </div>
 
-            <div className="col-md-12 pb-3">
+            <div className="col-md-12 pb-3 position-relative">
               <InputField
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"} // Toggle input type
                 placeholder="Please enter your password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
                 required
               />
+              <span
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  top: "38px",
+                  cursor: "pointer",
+                  color: "blue",
+                }}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </span>
             </div>
 
             <button className="btn btn-primary w-100" type="submit">

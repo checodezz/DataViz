@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../utils/constants";
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     fullname: "",
@@ -11,6 +12,7 @@ const SignUp = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,6 +40,11 @@ const SignUp = () => {
       setErrorMessage(error.response?.data?.message || "Sign-up failed");
       toast.error(error.response?.data?.message || "Sign-up failed");
     }
+  };
+
+  // Toggle show/hide password
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -98,16 +105,28 @@ const SignUp = () => {
                 />
               </div>
 
-              <div className="col-md-6">
+              <div className="col-md-12 position-relative">
                 <InputField
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Toggle input type
                   placeholder="a strong password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
                   required
                 />
+                <span
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: "absolute",
+                    right: "20px",
+                    top: "38px",
+                    cursor: "pointer",
+                    color: "blue",
+                  }}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </span>
               </div>
 
               {errorMessage && <p className="text-danger">{errorMessage}</p>}
