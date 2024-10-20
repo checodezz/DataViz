@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAsync } from "../redux/authSlice";
-
+import { toast } from "react-toastify";
 const UserComp = () => {
   const dispatch = useDispatch();
   const { fullname } = useSelector((state) => state.auth?.user) || "";
 
   const handleLogout = () => {
+    toast.warning(`Logged Out Successfully`);
     dispatch(logoutUserAsync());
   };
 
