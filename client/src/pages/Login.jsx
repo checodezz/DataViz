@@ -34,7 +34,8 @@ const Login = () => {
       navigate(redirectUrl || "/dashboard");
     }
     if (error) {
-      toast.error(error);
+      console.log(error);
+      toast.error(error.error);
     }
   }, [isAuthenticated, error, navigate, redirectUrl]);
 

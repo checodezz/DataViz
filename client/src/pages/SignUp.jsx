@@ -32,6 +32,7 @@ const SignUp = () => {
         setTimeout(() => {
           navigate(redirectUrl || `/`);
         }, 1000);
+        toast.success("Login to Explore.");
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Sign-up failed");

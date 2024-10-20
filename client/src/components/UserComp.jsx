@@ -3,7 +3,7 @@ import { logoutUserAsync } from "../redux/authSlice";
 
 const UserComp = () => {
   const dispatch = useDispatch();
-  const { fullname } = useSelector((state) => state.auth?.user);
+  const { fullname } = useSelector((state) => state.auth?.user) || "";
 
   const handleLogout = () => {
     dispatch(logoutUserAsync());

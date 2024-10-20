@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 
+// Login Thunk
 export const loginUserAsync = createAsyncThunk(
     "auth/loginUser",
     async (userData, { rejectWithValue }) => {
@@ -21,6 +22,7 @@ export const loginUserAsync = createAsyncThunk(
     }
 );
 
+// Logout Thunk
 export const logoutUserAsync = createAsyncThunk(
     "auth/logoutUser",
     async (_, { rejectWithValue }) => {
@@ -32,7 +34,7 @@ export const logoutUserAsync = createAsyncThunk(
                     withCredentials: true
                 }
             );
-            console.log(response.data)
+            console.log(response.data);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -40,14 +42,17 @@ export const logoutUserAsync = createAsyncThunk(
     }
 );
 
+// Get initial state from sessionStorage (if available)
+const initialState = {
+    isAuthenticated: sessionStorage.getItem("isAuthenticated") === "true" || false,
+    user: JSON.parse(sessionStorage.getItem("user")) || null,
+    loading: false,
+    error: null,
+};
+
 const authSlice = createSlice({
     name: "auth",
-    initialState: {
-        isAuthenticated: false,
-        user: [],
-        loading: false,
-        error: null,
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -60,11 +65,18 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = action.payload;
                 state.error = null;
+                // Persist to sessionStorage
+                sessionStorage.setItem("isAuthenticated", true);
+                sessionStorage.setItem("user", JSON.stringify(action.payload));
             })
             .addCase(loginUserAsync.rejected, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = false;
+                console.log(action.payload);
                 state.error = action.payload;
+                // Clear persisted data on login failure
+                sessionStorage.removeItem("isAuthenticated");
+                sessionStorage.removeItem("user");
             })
             // Handle logout
             .addCase(logoutUserAsync.pending, (state) => {
@@ -75,6 +87,9 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.error = null;
+                // Clear persisted data on logout
+                sessionStorage.removeItem("isAuthenticated");
+                sessionStorage.removeItem("user");
             })
             .addCase(logoutUserAsync.rejected, (state, action) => {
                 state.loading = false;
