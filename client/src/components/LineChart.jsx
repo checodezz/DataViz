@@ -58,13 +58,10 @@ const LineChart = ({ data, selectedCategory }) => {
         zoom: {
           enabled: true,
           mode: "xy", // Allow zooming in both x and y directions
-          onZoom: ({ chart }) => {
-            // Prevent the default scroll behavior when zooming
-            chart.canvas.style.cursor = "grab"; // Optional: Change cursor during zoom
-          },
-          onZoomComplete: ({ chart }) => {
-            // Change cursor back to default after zoom
-            chart.canvas.style.cursor = "default";
+          // Optional: you can also define how much you want to zoom
+          wheel: {
+            enabled: true,
+            modifierKey: "ctrl", // Use Ctrl + Mouse Wheel to zoom
           },
         },
       },
@@ -85,9 +82,19 @@ const LineChart = ({ data, selectedCategory }) => {
     },
   };
 
+  // This function handles mouse wheel events
+  const handleWheel = (event) => {
+    if (event.ctrlKey) {
+      event.preventDefault(); // Prevent scrolling when holding Ctrl
+    }
+  };
+
   return (
-    <div>
-      <h3 className="mt-5">Trend for the feature {selectedCategory} :</h3>
+    <div
+      style={{ position: "relative", height: "400px", width: "100%" }}
+      onWheel={handleWheel} // Prevent scrolling when using the mouse wheel
+    >
+      <h3 className="mt-5">Trend for the feature {selectedCategory}:</h3>
       <Line data={getLineChartData()} options={options} />
     </div>
   );

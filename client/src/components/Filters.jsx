@@ -1,6 +1,5 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Cookies from "js-cookie";
 
 const Filters = ({
   startDate,
@@ -14,7 +13,7 @@ const Filters = ({
   resetFilters,
 }) => {
   return (
-    <div>
+    <div className="bg-light p-4 rounded">
       <h3 className="mb-4">Filters</h3>
       <div className="mb-3">
         <label className="form-label">Start Date:</label>
@@ -38,7 +37,7 @@ const Filters = ({
           placeholderText="Select End Date"
         />
       </div>
-      <div className="mb-3 col-md-5">
+      <div className="mb-3 col-md-7">
         <label className="form-label">Age:</label>
         <select
           value={selectedAge}
@@ -49,7 +48,7 @@ const Filters = ({
           <option value=">25">25 & Above</option>
         </select>
       </div>
-      <div className="mb-3 col-md-5">
+      <div className="mb-3 col-md-6">
         <label className="form-label">Gender:</label>
         <select
           value={selectedGender}
@@ -60,9 +59,11 @@ const Filters = ({
           <option value="Female">Female</option>
         </select>
       </div>
-      <button onClick={resetFilters} className="btn btn-danger">
-        Reset Filters
-      </button>
+      <section className="my-4">
+        <button onClick={resetFilters} className="btn btn-outline-danger ">
+          Reset Filters
+        </button>
+      </section>
     </div>
   );
 };

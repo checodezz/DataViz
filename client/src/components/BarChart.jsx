@@ -8,11 +8,10 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import zoomPlugin from "chartjs-plugin-zoom"; // Import the zoom plugin
-import { useState } from "react";
-import LineChart from "./LineChart"; // Import the new LineChart component
+import zoomPlugin from "chartjs-plugin-zoom";
+import { useState, useRef } from "react";
+import LineChart from "./LineChart";
 
-// Register the necessary components and the zoom plugin
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,11 +19,12 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  zoomPlugin // Register the zoom plugin
+  zoomPlugin
 );
 
 const FilteredBarChart = ({ data }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const lineChartRef = useRef(null);
 
   const categorySums = {
     A: 0,
@@ -36,23 +36,29 @@ const FilteredBarChart = ({ data }) => {
   };
 
   data.forEach((item) => {
-    categorySums.A += item.a / 60 || 0; // Add value for category 'a'
-    categorySums.B += item.b / 60 || 0; // Add value for category 'b'
-    categorySums.C += item.c / 60 || 0; // Add value for category 'c'
-    categorySums.D += item.d / 60 || 0; // Add value for category 'd'
-    categorySums.E += item.e / 60 || 0; // Add value for category 'e'
-    categorySums.F += item.f / 60 || 0; // Add value for category 'f'
+    categorySums.A += item.a / 60 || 0;
+    categorySums.B += item.b / 60 || 0;
+    categorySums.C += item.c / 60 || 0;
+    categorySums.D += item.d / 60 || 0;
+    categorySums.E += item.e / 60 || 0;
+    categorySums.F += item.f / 60 || 0;
   });
 
-  const labels = Object.keys(categorySums).reverse(); // ['a', 'b', 'c', 'd', 'e', 'f']
-  const values = Object.values(categorySums).reverse(); // [sum of a, sum of b, sum of c, ...]
+  const labels = Object.keys(categorySums).reverse();
+  const values = Object.values(categorySums).reverse();
 
   const handleClick = (event, elements) => {
     if (elements.length > 0) {
       const clickedIndex = elements[0].index;
       const clickedCategory = labels[clickedIndex];
-      console.log(`You clicked on: ${clickedCategory}`);
       setSelectedCategory(clickedCategory);
+
+      if (lineChartRef.current) {
+        lineChartRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     }
   };
 
@@ -98,7 +104,7 @@ const FilteredBarChart = ({ data }) => {
       y: {
         title: {
           display: true,
-          text: "Categories (Features)", // Set title for the Y-axis
+          text: "Categories (Features)",
         },
       },
     },
@@ -109,7 +115,8 @@ const FilteredBarChart = ({ data }) => {
       <div className="col-md-10">
         <Bar data={chartData} options={options} />
       </div>
-      <div className="col-md-10">
+      <div className="col-md-10" ref={lineChartRef}>
+        {" "}
         {selectedCategory && (
           <LineChart data={data} selectedCategory={selectedCategory} />
         )}

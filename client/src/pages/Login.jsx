@@ -15,7 +15,6 @@ const Login = () => {
     password: "",
   });
 
-  // Extract the redirect URL from query parameters
   const redirectUrl = new URLSearchParams(location.search).get("redirect");
 
   const handleInputChange = (e) => {
@@ -27,7 +26,6 @@ const Login = () => {
     dispatch(loginUserAsync(formData));
   };
 
-  // useEffect to navigate when isAuthenticated changes to true
   useEffect(() => {
     if (isAuthenticated) {
       navigate(redirectUrl || "/dashboard"); // Redirect to the intended page or default to dashboard
