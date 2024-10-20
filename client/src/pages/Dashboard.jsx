@@ -49,9 +49,8 @@ const Dashboard = () => {
       <hr />
       <div className="bg-light p-4 rounded shadow-sm my-4">
         <h3 className="text-success text-center fw-bold">
-          <i className="bi bi-bar-chart-fill me-2"></i>{" "}
-          {/* Adding the chart icon */}
-          Explore the Latest Trends and Analytics
+          <i className="bi bi-bar-chart-fill me-2"></i> Explore the Latest
+          Trends and Analytics
         </h3>
         <p className="text-secondary text-center mb-0">
           Tailored just for you. Dive into the insights!

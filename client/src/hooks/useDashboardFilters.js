@@ -26,12 +26,17 @@ export const useDashboardFilters = () => {
         query.get("gender") || getCookieValue("gender", "Male")
     );
 
+    const [selectedCategory, setSelectedCategory] = useState(() =>
+        query.get("selectedCategory") || getCookieValue("selectedCategory", "")
+    );
+
     useEffect(() => {
         Cookies.set("startDate", startDate.toISOString().split("T")[0]);
         Cookies.set("endDate", endDate.toISOString().split("T")[0]);
         Cookies.set("age", selectedAge);
         Cookies.set("gender", selectedGender);
-    }, [startDate, endDate, selectedAge, selectedGender]);
+        Cookies.set("selectedCategory", selectedCategory);
+    }, [startDate, endDate, selectedAge, selectedGender, selectedCategory]);
 
     useEffect(() => {
         const params = new URLSearchParams();
@@ -39,18 +44,23 @@ export const useDashboardFilters = () => {
         params.set("endDate", endDate.toISOString().split("T")[0]);
         params.set("age", selectedAge);
         params.set("gender", selectedGender);
+        if (selectedCategory) {
+            params.set("selectedCategory", selectedCategory);
+        }
         navigate({ search: params.toString() });
-    }, [startDate, endDate, selectedAge, selectedGender, navigate]);
+    }, [startDate, endDate, selectedAge, selectedGender, selectedCategory, navigate]);
 
     const resetFilters = () => {
         Cookies.remove("startDate");
         Cookies.remove("endDate");
         Cookies.remove("age");
         Cookies.remove("gender");
+        Cookies.remove("selectedCategory");
         setStartDate(new Date("2022-10-04"));
         setEndDate(new Date("2022-10-11"));
         setSelectedAge("15-25");
         setSelectedGender("Male");
+        setSelectedCategory(""); // reset category
     };
 
     return {
@@ -58,10 +68,12 @@ export const useDashboardFilters = () => {
         endDate,
         selectedAge,
         selectedGender,
+        selectedCategory,
         setStartDate,
         setEndDate,
         setSelectedAge,
         setSelectedGender,
+        setSelectedCategory,
         resetFilters,
     };
 };

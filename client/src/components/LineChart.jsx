@@ -9,9 +9,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import zoomPlugin from "chartjs-plugin-zoom"; // Import the zoom plugin
+import zoomPlugin from "chartjs-plugin-zoom"; 
 
-// Register the necessary components and the zoom plugin
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,7 +19,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  zoomPlugin // Register the zoom plugin
+  zoomPlugin 
 );
 
 const LineChart = ({ data, selectedCategory }) => {
@@ -31,14 +30,14 @@ const LineChart = ({ data, selectedCategory }) => {
     }));
 
     return {
-      labels: filteredData.map((item) => item.day), // Extract days for X-axis
+      labels: filteredData.map((item) => item.day),
       datasets: [
         {
           label: `Timeline for ${selectedCategory}`,
-          data: filteredData.map((item) => item.value), // Extract values for Y-axis
+          data: filteredData.map((item) => item.value), 
           fill: false,
-          borderColor: "rgba(75, 192, 192, 1)", // Customize color
-          tension: 0.1, // For smooth line
+          borderColor: "rgba(75, 192, 192, 1)",
+          tension: 0.1, 
         },
       ],
     };
@@ -53,15 +52,14 @@ const LineChart = ({ data, selectedCategory }) => {
       zoom: {
         pan: {
           enabled: true,
-          mode: "xy", // Allow panning in both x and y directions
+          mode: "xy", 
         },
         zoom: {
           enabled: true,
-          mode: "xy", // Allow zooming in both x and y directions
-          // Optional: you can also define how much you want to zoom
+          mode: "xy", 
           wheel: {
             enabled: true,
-            modifierKey: "ctrl", // Use Ctrl + Mouse Wheel to zoom
+            modifierKey: "ctrl",
           },
         },
       },
@@ -70,29 +68,28 @@ const LineChart = ({ data, selectedCategory }) => {
       x: {
         title: {
           display: true,
-          text: "Days", // Title for the X-axis
+          text: "Days", 
         },
       },
       y: {
         title: {
           display: true,
-          text: "Values (Hours)", // Title for the Y-axis
+          text: "Values (Hours)", 
         },
       },
     },
   };
 
-  // This function handles mouse wheel events
   const handleWheel = (event) => {
     if (event.ctrlKey) {
-      event.preventDefault(); // Prevent scrolling when holding Ctrl
+      event.preventDefault();
     }
   };
 
   return (
     <div
       style={{ position: "relative", height: "400px", width: "100%" }}
-      onWheel={handleWheel} // Prevent scrolling when using the mouse wheel
+      onWheel={handleWheel} 
     >
       <h3 className="mt-5">Trend for the feature {selectedCategory}:</h3>
       <Line data={getLineChartData()} options={options} />

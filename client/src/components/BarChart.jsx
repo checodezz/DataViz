@@ -1,3 +1,5 @@
+import { useState, useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +11,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
-import { useState, useRef } from "react";
 import LineChart from "./LineChart";
 
 ChartJS.register(
@@ -25,6 +26,17 @@ ChartJS.register(
 const FilteredBarChart = ({ data }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const lineChartRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Initialize category from URL query
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const initialCategory = query.get("selectedCategory");
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [location]);
 
   const categorySums = {
     A: 0,
@@ -52,6 +64,11 @@ const FilteredBarChart = ({ data }) => {
       const clickedIndex = elements[0].index;
       const clickedCategory = labels[clickedIndex];
       setSelectedCategory(clickedCategory);
+
+      // Update URL with selected category
+      const query = new URLSearchParams(location.search);
+      query.set("selectedCategory", clickedCategory);
+      navigate({ search: query.toString() });
 
       if (lineChartRef.current) {
         lineChartRef.current.scrollIntoView({
