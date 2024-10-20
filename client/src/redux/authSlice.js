@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL } from "../utils/constants";
 
-// Async thunk for logging in
 export const loginUserAsync = createAsyncThunk(
     "auth/loginUser",
     async (userData, { rejectWithValue }) => {
         try {
             const response = await axios.post(
-                `https://data-visualization-dashboard-seven.vercel.app/user/login`,
+                `${API_URL}/user/login`,
                 userData,
                 {
                     withCredentials: true
@@ -21,13 +21,12 @@ export const loginUserAsync = createAsyncThunk(
     }
 );
 
-// Async thunk for logging out
 export const logoutUserAsync = createAsyncThunk(
     "auth/logoutUser",
     async (_, { rejectWithValue }) => {
         try {
             const response = await axios.post(
-                `https://data-visualization-dashboard-seven.vercel.app/user/logout`,
+                `${API_URL}/user/logout`,
                 {},
                 {
                     withCredentials: true

@@ -1,0 +1,1 @@
+export const API_URL = "https://data-visualization-dashboard-seven.vercel.app"

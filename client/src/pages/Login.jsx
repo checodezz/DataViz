@@ -3,12 +3,13 @@ import InputField from "../utils/InputField";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAsync } from "../redux/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const location = useLocation(); // To get the current location and query params
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,19 +24,24 @@ const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    toast.info("Logging in...");
     dispatch(loginUserAsync(formData));
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(redirectUrl || "/dashboard"); // Redirect to the intended page or default to dashboard
+      toast.success("Login successful!");
+      navigate(redirectUrl || "/dashboard");
     }
-  }, [isAuthenticated, navigate, redirectUrl]);
+    if (error) {
+      toast.error(error);
+    }
+  }, [isAuthenticated, error, navigate, redirectUrl]);
 
   return (
     <div
       className="d-flex flex-column justify-content-center align-items-center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "90vh" }}
     >
       <h1 className="text-secondary pb-5">
         Welcome to <span className="text-primary">Data</span>Viz
@@ -76,17 +82,20 @@ const Login = () => {
               />
             </div>
 
-            <button
-              className="btn btn-primary w-100"
-              style={{ borderRadius: "0px" }}
-              type="submit"
-            >
+            <button className="btn btn-primary w-100" type="submit">
               Log In
             </button>
 
             <p className="text-decoration-none pt-3 text-center mb-0">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-decoration-none">
+              <Link
+                to={
+                  redirectUrl
+                    ? `/signup?redirect=${encodeURIComponent(redirectUrl)}`
+                    : "/signup"
+                }
+                className="text-decoration-none"
+              >
                 Sign up
               </Link>
             </p>

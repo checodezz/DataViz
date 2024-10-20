@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL } from "../utils/constants";
 
 export const fetchDashboardDataAsync = createAsyncThunk(
     "dashboard/fetchData",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get("https://data-visualization-dashboard-seven.vercel.app/dashboard", {
+            const response = await axios.get(`${API_URL}/dashboard`, {
                 withCredentials: true,
             });
             console.log(response.data)
@@ -40,5 +41,4 @@ const dashboardSlice = createSlice({
             });
     },
 });
-
 export default dashboardSlice.reducer;
