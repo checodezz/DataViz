@@ -8,7 +8,7 @@ import { fetchSheetData } from "./dynamicSheetData/dataFetcher.js"
 
 dotenv.config();
 
-const allowedOrigins = ["http://localhost:5173", "https://your-production-domain.com"];
+const allowedOrigins = ["http://localhost:5173", "https://data-visualization-dashboard-psi.vercel.app/", "https://vercel.com/checodezzs-projects/data-visualization-dashboard/BA5UpaHHdfu8GSiqHR8N8pMsPTG6"];
 
 const app = express();
 
