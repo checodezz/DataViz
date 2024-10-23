@@ -147,12 +147,12 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="col-md-8 d-flex align-items-center">
+        <div className="col-md-8 ps-5 d-flex align-items-center">
           <div className="p-4 text-muted ">
             <h5 className="mb-3">Note:</h5>
             <p className="mb-2">
-              Please test the URL sharing feature in a regular browser tab, not
-              in incognito mode.
+              Please test the URL sharing feature in a{" "}
+              <b> regular browser tab</b>, not in incognito mode.
             </p>
             <p className="mb-2">
               Since cookie-based authentication is used, the backend cannot send
