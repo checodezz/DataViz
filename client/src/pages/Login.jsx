@@ -4,10 +4,13 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAsync } from "../redux/authSlice";
 import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +19,7 @@ const Login = () => {
     password: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const redirectUrl = new URLSearchParams(location.search).get("redirect");
 
@@ -41,10 +44,11 @@ const Login = () => {
     }
   }, [isAuthenticated, error, navigate, redirectUrl]);
 
-  // Toggle show/hide password
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div
@@ -81,7 +85,7 @@ const Login = () => {
             <div className="col-md-12 pb-3 position-relative">
               <InputField
                 label="Password"
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"}
                 placeholder="Please enter your password"
                 name="password"
                 value={formData.password}

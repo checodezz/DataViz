@@ -23,13 +23,12 @@ ChartJS.register(
   zoomPlugin
 );
 
-const FilteredBarChart = ({ data }) => {
+const BarChart = ({ data }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const lineChartRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Initialize category from URL query
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const initialCategory = query.get("selectedCategory");
@@ -65,7 +64,6 @@ const FilteredBarChart = ({ data }) => {
       const clickedCategory = labels[clickedIndex];
       setSelectedCategory(clickedCategory);
 
-      // Update URL with selected category
       const query = new URLSearchParams(location.search);
       query.set("selectedCategory", clickedCategory);
       navigate({ search: query.toString() });
@@ -142,4 +140,4 @@ const FilteredBarChart = ({ data }) => {
   );
 };
 
-export default FilteredBarChart;
+export default BarChart;

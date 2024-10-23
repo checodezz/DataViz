@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 
-// Login Thunk
 export const loginUserAsync = createAsyncThunk(
     "auth/loginUser",
     async (userData, { rejectWithValue }) => {
@@ -22,7 +21,6 @@ export const loginUserAsync = createAsyncThunk(
     }
 );
 
-// Logout Thunk
 export const logoutUserAsync = createAsyncThunk(
     "auth/logoutUser",
     async (_, { rejectWithValue }) => {
@@ -42,7 +40,6 @@ export const logoutUserAsync = createAsyncThunk(
     }
 );
 
-// Get initial state from sessionStorage (if available)
 const initialState = {
     isAuthenticated: sessionStorage.getItem("isAuthenticated") === "true" || false,
     user: JSON.parse(sessionStorage.getItem("user")) || null,
@@ -65,7 +62,6 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = action.payload;
                 state.error = null;
-                // Persist to sessionStorage
                 sessionStorage.setItem("isAuthenticated", true);
                 sessionStorage.setItem("user", JSON.stringify(action.payload));
             })

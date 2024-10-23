@@ -60,7 +60,7 @@ export const useDashboardFilters = () => {
         setEndDate(new Date("2022-10-11"));
         setSelectedAge("15-25");
         setSelectedGender("Male");
-        setSelectedCategory(""); // reset category
+        setSelectedCategory("");
     };
 
     return {
