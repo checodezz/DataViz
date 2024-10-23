@@ -17,10 +17,12 @@ const Dashboard = () => {
     endDate,
     selectedAge,
     selectedGender,
+    selectedCategory,
     setStartDate,
     setEndDate,
     setSelectedAge,
     setSelectedGender,
+    setSelectedCategory,
     resetFilters,
   } = useDashboardFilters();
 
@@ -37,6 +39,8 @@ const Dashboard = () => {
       item.gender === selectedGender
     );
   });
+
+  console.log(filteredData);
 
   if (loading) return <Spinner />;
 
@@ -73,11 +77,21 @@ const Dashboard = () => {
         <div className="col-md-9 ms-auto mb-5 pb-5">
           <section className="mb-2 pb-3">
             <h3 className="">Feature Usage Over Time</h3>
-            <p className="text-danger">
-              * click on any feature to show its Timeline below
+            <p className="text-primary">
+              * Click on any feature to show its Timeline below
             </p>
           </section>
-          {filteredData && <BarChart data={filteredData} />}
+          {filteredData && filteredData.length > 0 ? (
+            <BarChart
+              data={filteredData}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          ) : (
+            <p className="text-danger pt-5 d-flex justify-content-center aligh-items-center">
+              No data available for the selected date range and filters
+            </p>
+          )}
         </div>
       </div>
       <hr />

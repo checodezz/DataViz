@@ -20,8 +20,8 @@ export const fetchDashboardDataAsync = createAsyncThunk(
 const dashboardSlice = createSlice({
     name: "dashboard",
     initialState: {
-        data: null,
         loading: false,
+        data: [],
         error: null,
     },
     reducers: {},

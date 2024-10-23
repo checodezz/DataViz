@@ -57,7 +57,6 @@ const authSlice = createSlice({
                 state.loading = true;
             })
             .addCase(loginUserAsync.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.loading = false;
                 state.isAuthenticated = true;
                 state.user = action.payload;
@@ -70,11 +69,9 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 console.log(action.payload);
                 state.error = action.payload;
-                // Clear persisted data on login failure
                 sessionStorage.removeItem("isAuthenticated");
                 sessionStorage.removeItem("user");
             })
-            // Handle logout
             .addCase(logoutUserAsync.pending, (state) => {
                 state.loading = true;
             })
@@ -83,7 +80,6 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.error = null;
-                // Clear persisted data on logout
                 sessionStorage.removeItem("isAuthenticated");
                 sessionStorage.removeItem("user");
             })

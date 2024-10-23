@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
@@ -23,8 +23,7 @@ ChartJS.register(
   zoomPlugin
 );
 
-const BarChart = ({ data }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const BarChart = ({ data, selectedCategory, setSelectedCategory }) => {
   const lineChartRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -99,13 +98,14 @@ const BarChart = ({ data }) => {
         position: "top",
       },
       zoom: {
-        pan: {
+        wheel: {
           enabled: true,
-          mode: "xy",
         },
-        zoom: {
+        drag: {
           enabled: true,
-          mode: "xy",
+        },
+        pinch: {
+          enabled: true,
         },
       },
     },
@@ -131,7 +131,6 @@ const BarChart = ({ data }) => {
         <Bar data={chartData} options={options} />
       </div>
       <div className="col-md-10" ref={lineChartRef}>
-        {" "}
         {selectedCategory && (
           <LineChart data={data} selectedCategory={selectedCategory} />
         )}

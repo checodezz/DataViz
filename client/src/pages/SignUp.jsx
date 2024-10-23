@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../utils/constants";
+import Spinner from "../components/Spinner";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -12,8 +13,9 @@ const SignUp = () => {
     password: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,6 +27,7 @@ const SignUp = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(`${API_URL}/user/signup`, formData);
       if (response.status === 201) {
@@ -32,9 +35,9 @@ const SignUp = () => {
           "Account created successfully! Please login to continue."
         );
         setTimeout(() => {
+          setLoading(false);
           navigate(redirectUrl || `/`);
         }, 1000);
-        toast.success("Login to Explore.");
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Sign-up failed");
@@ -42,10 +45,11 @@ const SignUp = () => {
     }
   };
 
-  // Toggle show/hide password
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="container">
@@ -108,7 +112,7 @@ const SignUp = () => {
               <div className="col-md-12 position-relative">
                 <InputField
                   label="Password"
-                  type={showPassword ? "text" : "password"} // Toggle input type
+                  type={showPassword ? "text" : "password"}
                   placeholder="a strong password"
                   name="password"
                   value={formData.password}

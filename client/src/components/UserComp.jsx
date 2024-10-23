@@ -1,14 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAsync } from "../redux/authSlice";
 import { toast } from "react-toastify";
+import Spinner from "./Spinner";
 const UserComp = () => {
   const dispatch = useDispatch();
   const { fullname } = useSelector((state) => state.auth?.user) || "";
+  const { loading } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     toast.warning(`Logged Out Successfully`);
     dispatch(logoutUserAsync());
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <section className="container mt-2">
