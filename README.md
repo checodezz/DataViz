@@ -1,3 +1,4 @@
+
 # Interactive Data Visualization Dashboard
 
 An interactive dashboard built with the MERN stack, enabling users to explore and analyze large datasets through dynamic charts and advanced filtering options. This project aims to provide insights into data trends, feature usage, and user engagement.
@@ -6,6 +7,7 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [ETL Process](#etl-process)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -26,7 +28,16 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 - **Charting Library**: Chart.js
+- **Data Integration**: Google Sheets API for ETL
 - **Deployment**: Vercel
+
+## ETL Process
+
+This project uses an **ETL (Extract, Transform, Load)** process to fetch and store data from a Google Sheet, allowing up-to-date information for analytics. The process involves:
+
+1. **Extract**: Accessing data from a Google Sheet using Google’s Sheets API and Service Account for authentication. Credentials are securely stored in environment variables.
+2. **Transform**: Cleaning and formatting the extracted data for consistency and usability, transforming fields such as "Day," "Age," and "Gender" into usable formats.
+3. **Load**: Saving the transformed data into a MongoDB database for efficient access, where it is continuously updated by clearing old entries and inserting new data.
 
 ## Installation
 
@@ -47,7 +58,9 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
    npm install
    ```
 
-3. Create a `.env` file in the `server` directory and add your environment variables (e.g., MongoDB URI).
+3. Configure environment variables in `.env` for the `server`:
+   - MongoDB URI
+   - Google Sheets API credentials (`client_email` and `private_key`)
 
 4. Start the development servers:
    ```bash
@@ -80,3 +93,4 @@ Contributions are welcome! Please follow these steps:
 
 - Thanks to the open-source community for their contributions and resources.
 - Special thanks to [Chart.js](https://www.chartjs.org/) for their excellent charting library.
+- Thanks to Google Sheets API for providing easy-to-integrate data access.
