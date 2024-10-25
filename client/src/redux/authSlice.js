@@ -13,7 +13,6 @@ export const loginUserAsync = createAsyncThunk(
                     withCredentials: true
                 }
             );
-            console.log(response.data.existingUser);
             return response.data.existingUser;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -32,7 +31,6 @@ export const logoutUserAsync = createAsyncThunk(
                     withCredentials: true
                 }
             );
-            console.log(response.data);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
