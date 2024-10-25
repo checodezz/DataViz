@@ -3,6 +3,8 @@
 
 An interactive dashboard built with the MERN stack, enabling users to explore and analyze large datasets through dynamic charts and advanced filtering options. This project aims to provide insights into data trends, feature usage, and user engagement.
 
+![image](https://github.com/user-attachments/assets/0d7497ea-a10a-4ef1-ad12-d67c867abb0f)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -14,6 +16,8 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
+![image](https://github.com/user-attachments/assets/85bf6e6c-94bc-426d-abd1-bf672c8f00ba)
+
 ## Features
 
 - **Dynamic Charts**: Visualize data trends using bar and line charts.
@@ -21,6 +25,8 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
 - **User Authentication**: Secure access with user authentication and session management.
 - **Responsive Design**: Optimized for various screen sizes for seamless user experience.
 - **Real-time Updates**: Fetch data dynamically to ensure the latest information is displayed.
+
+![image](https://github.com/user-attachments/assets/e52912ff-a5cf-49d9-be15-5f064be8cae2)
 
 ## Tech Stack
 
