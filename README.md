@@ -23,6 +23,7 @@ An interactive dashboard built with the MERN stack, enabling users to explore an
 - **Dynamic Charts**: Visualize data trends using bar and line charts.
 - **Advanced Filtering**: Filter data by date range, age, and gender for tailored insights.
 - **User Authentication**: Secure access with user authentication and session management.
+- **URL Sharing**: Share specific filtered views via unique URLs after authentication.
 - **Responsive Design**: Optimized for various screen sizes for seamless user experience.
 - **Real-time Updates**: Fetch data dynamically to ensure the latest information is displayed.
 
