@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUserAsync } from "../redux/authSlice";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
+import { fetchDashboardDataAsync } from "../redux/dashboardSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       toast.success("Login successful!");
+      dispatch(fetchDashboardDataAsync());
       navigate(redirectUrl || "/dashboard");
     }
     if (error) {

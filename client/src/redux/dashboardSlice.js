@@ -9,7 +9,7 @@ export const fetchDashboardDataAsync = createAsyncThunk(
             const response = await axios.get(`${API_URL}/dashboard`, {
                 withCredentials: true,
             });
-            console.log(response.data)
+            // console.log(response.data)
             return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

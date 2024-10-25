@@ -40,8 +40,6 @@ const Dashboard = () => {
     );
   });
 
-  console.log(filteredData);
-
   if (loading) return <Spinner />;
 
   if (error)
@@ -89,7 +87,8 @@ const Dashboard = () => {
             />
           ) : (
             <p className="text-danger pt-5 d-flex justify-content-center aligh-items-center">
-              No data available for the selected date range and filters
+              No data available for the selected date range and filters. Please
+              refresh after some time and try again.
             </p>
           )}
         </div>
